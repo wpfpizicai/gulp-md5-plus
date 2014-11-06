@@ -7,7 +7,7 @@
 First, install `gulp-md5-plus` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-md5
+npm install --save-dev gulp-md5-plus
 ```
 
 Then, add it to your `gulpfile.js`:
