@@ -1,6 +1,6 @@
 # gulp-md5-plus
 
-> md5 plugin for [gulp](https://github.com/wpfpizicai/gulp-md5-plus) ,md5 the static files(eg javascript style image files) ;then which link them is also need to repace the filename to request the right file.
+> md5 plugin for [gulp](https://github.com/wpfpizicai/gulp-md5-plus) ,md5 the static files(eg javascript style image files) ;then replace the filenames in css or the html if needed by passing the file or dir in the second parameter.
 
 ## Usage
 
@@ -34,7 +34,7 @@ Optionnal: you can pass the size to limit the size of the hash that is appended.
 Type: `String`  
 Default: null
 
-Optionnal: the file or the folder needs to repace the name of has md5ed filename 
+Optionnal: the file need to replace the file name of the md5ed files. dir is also supported
 
 Example:
 ```javascript
@@ -43,7 +43,7 @@ Example:
         .pipe(gulp.dest('./output'));
 ```
 
-The sample above will append the full md5 hash to each of the file in the static/js folder then repalce the link file name in the output/html/ use md5ed file name; at last store all of that into the *output* folder.
+The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
 
 
 ## License
