@@ -27,23 +27,8 @@ module.exports = function (size, ifile) {
         var md5_filename = filename.split('.').map(function(item, i, arr){
             return i == arr.length-2 ? item + '_'+ d : item;
         }).join('.');
-        // walk(ifile,function(err,results){
-        //     if (err) return console.log(err);
-        //     results.forEach(function(ilist){
-        //         fs.readFile(ilist,'utf8',function(err,data){
-        //             if(err){
-        //                 return console.log(err)
-        //             }
-        //             var result = data.replace(new RegExp(filename), md5_filename);
 
-        //             var newData = fs.writeFile(ilist, result, 'utf8', function (err) {
-        //                 if (err) return console.log(err);
-        //             });
-        //         })
-        //     })
-        // })
-        
-        glob(ifile,function(err, files){
+        ifile && glob(ifile,function(err, files){
             if(err) return console.log(err);
             files.forEach(function(ilist){
                 fs.readFile(ilist,'utf8',function(err,data){
