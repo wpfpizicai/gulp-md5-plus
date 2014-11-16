@@ -13,8 +13,14 @@ module.exports = function (size, ifile) {
             return cb();
         }
 
+        if(!file.contents){
+            return cb();
+        }
+
         var d = calcMd5(file, size)
         , filename = path.basename(file.path)
+        , relativepath = path.relative(file.base ,file.path)
+        , sub_namepath = relativepath.replace(new RegExp(filename) , "").split(path.sep).join('/')
         , dir;
 
         if(file.path[0] == '.'){
@@ -30,7 +36,7 @@ module.exports = function (size, ifile) {
         ifile && glob(ifile,function(err, files){
             if(err) return console.log(err);
             files.forEach(function(ilist){
-                var result = fs.readFileSync(ilist,'utf8').replace(new RegExp(filename), md5_filename);
+                var result = fs.readFileSync(ilist,'utf8').replace(new RegExp(sub_namepath + filename), sub_namepath + md5_filename);
                 fs.writeFileSync(ilist, result, 'utf8');
             })
         })

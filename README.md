@@ -15,10 +15,32 @@ Then, add it to your `gulpfile.js`:
 ```javascript
 var md5 = require("gulp-md5-plus");
 
-gulp.src("./src/*.ext")
+gulp.src("./src/*.css")
 	.pipe(md5(10,'./output/index.html'))
 	.pipe(gulp.dest("./dist"));
 ```
+
+md5 all css files in the src folder and change these css names in the quoted html--index.html
+
+
+```javascript
+
+gulp.task('img' ,function() {
+    var imgSrc = './static/img/**',
+        quoteSrc = './output/static/css/**/*.css',
+        imgDst = './output/static/img';
+
+    return gulp.src(imgSrc)
+        .pipe(imagemin())
+        .pipe(md5(10 ,quoteSrc))
+        .pipe(gulp.dest(imgDst));
+});
+
+```
+
+first, optimize all images in the img folder including all sub folders; then md5 all these images and change these images' names in the quoted css files ; 
+####note 
+the directory of the md5ed files in the imgDst folder is the same as that of original files in the imgSrc folder; and css files can refer the image file with the same name in different folder rightly;
 
 ## API
 

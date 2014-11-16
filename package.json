@@ -1,6 +1,6 @@
 {
   "name": "gulp-md5-plus",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "md5 the static file and change the names in the quoted html ",
   "main": "index.js",
   "scripts": {
