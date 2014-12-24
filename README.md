@@ -68,6 +68,7 @@ Example:
 The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
 
 
+
 ## License
 
 http://en.wikipedia.org/wiki/MIT_License[MIT License]
