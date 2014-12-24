@@ -22,7 +22,6 @@ gulp.src("./src/*.css")
 
 md5 all css files in the src folder and change these css names in the quoted html--index.html
 
-
 ```javascript
 
 gulp.task('img' ,function() {
