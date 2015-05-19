@@ -26,7 +26,7 @@ md5 all css files in the src folder and change these css names in the quoted htm
 
 gulp.task('img' ,function() {
     var imgSrc = './static/img/**',
-        quoteSrc = './output/static/css/**/*.css',
+        quoteSrc = './output/static/css/**/*.css', // [./output/static/css/**/*.css',./output/static/js/**/*.js']
         imgDst = './output/static/img';
 
     return gulp.src(imgSrc)
