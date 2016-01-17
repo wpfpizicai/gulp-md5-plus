@@ -38,6 +38,7 @@ gulp.task('img' ,function() {
 ```
 
 first, optimize all images in the img folder including all sub folders; then md5 all these images and change these images' names in the quoted css files ;
+
 ####note
 the directory of the md5ed files in the imgDst folder is the same as that of original files in the imgSrc folder; and css files can refer the image file with the same name in different folder rightly;
 
