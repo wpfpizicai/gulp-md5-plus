@@ -6,9 +6,14 @@ gulp.task('clean', function(){
 	del(['./output/*'])
 });
 
-gulp.task('css',function(){
+gulp.task('html',function(){
+	return gulp.src('./source/*.html')
+		.pipe(gulp.dest('./output/'))
+})
+
+gulp.task('css',['html'],function(){
 	return gulp.src("./source/css/*.css")
-		.pipe(md5(10,'./index.html'))
+		.pipe(md5(10,'./output/*.html'))
 		.pipe(gulp.dest("./output/css/"));
 })
 
@@ -20,5 +25,5 @@ gulp.task('img' , ['css'],function() {
 });
 
 gulp.task('default',['clean'],function(){
-	gulp.start('css','img');
+	gulp.start('html','css','img');
 })
