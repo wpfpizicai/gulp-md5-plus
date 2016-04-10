@@ -3,7 +3,7 @@ var md5 = require("gulp-md5-plus");
 var del = require('del');
 
 gulp.task('clean', function(){
-	del(['./output/*'])
+	return del(['./output'])
 });
 
 gulp.task('html',function(){
@@ -19,8 +19,10 @@ gulp.task('css',['html'],function(){
 
 
 gulp.task('img' , ['css'],function() {
-    gulp.src('./source/img/*')
-        .pipe(md5(10 ,'./output/css/*.css'))
+    gulp.src('./source/img/**/*')
+        .pipe(md5(10 ,'./output/css/*.css',{
+        	dirLevel : 1
+        }))
         .pipe(gulp.dest('./output/img/'));
 });
 
