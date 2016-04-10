@@ -5,8 +5,9 @@ var path = require('path')
 , fs = require('fs')
 , glob = require('glob');
 
-module.exports = function (size, ifile) {
+module.exports = function (size, ifile, option) {
     size = size | 0;
+    option = option || {};
     return through.obj(function (file, enc, cb) {
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-debug', 'Streaming not supported'));
@@ -22,7 +23,6 @@ module.exports = function (size, ifile) {
         , relativepath = path.relative(file.base ,file.path)
         , sub_namepath = relativepath.replace(new RegExp(filename) , "").split(path.sep).join('/')
         , dir;
-
         if(file.path[0] == '.'){
             dir = path.join(file.base, file.path);
         } else {
@@ -33,15 +33,22 @@ module.exports = function (size, ifile) {
         var md5_filename = filename.split('.').map(function(item, i, arr){
             return i == arr.length-2 ? item + '_'+ d : item;
         }).join('.');
+        var levelDir = "";
+        if(option.dirLevel){
+            levelDir = getLevelDir(dir,option.dirLevel).join(path.sep);
+        }
+        var l_filename = path.join(levelDir,filename);
+        var l_md5_filename = path.join(levelDir,md5_filename);
 
         if(Object.prototype.toString.call(ifile) == "[object Array]"){
             ifile.forEach(function(i_ifile){
                 i_ifile && glob(i_ifile,function(err, i_files){
                     if(err) return console.log(err);
                     i_files.forEach(function(i_ilist){
-                        var result = fs.readFileSync(i_ilist,'utf8').replace(new RegExp('/' + filename + '[^a-zA-Z_0-9].*?' ,"g"), function(sfile_name){
-                        return sfile_name.replace(filename,md5_filename)
-                    });
+
+                        var result = fs.readFileSync(i_ilist,'utf8').replace(new RegExp('/' + l_filename + '[^a-zA-Z_0-9].*?' ,"g"), function(sfile_name){
+                            return sfile_name.replace(l_filename,l_md5_filename)
+                        });
                         fs.writeFileSync(i_ilist, result, 'utf8');
                     })
                 })
@@ -50,8 +57,8 @@ module.exports = function (size, ifile) {
             ifile && glob(ifile,function(err, files){
                 if(err) return console.log(err);
                 files.forEach(function(ilist){
-                    var result = fs.readFileSync(ilist,'utf8').replace(new RegExp('/' + filename + '[^a-zA-Z_0-9].*?' ,"g"), function(sfile_name){
-                        return sfile_name.replace(filename,md5_filename)
+                    var result = fs.readFileSync(ilist,'utf8').replace(new RegExp('/' + l_filename + '[^a-zA-Z_0-9].*?' ,"g"), function(sfile_name){
+                        return sfile_name.replace(l_filename,l_md5_filename)
                     });
                     fs.writeFileSync(ilist, result, 'utf8');
                 })
@@ -61,13 +68,20 @@ module.exports = function (size, ifile) {
         file.path = path.join(dir, md5_filename);
 
         this.push(file);
-        console.log(md5_filename);
         cb();
     }, function (cb) {
         cb();
     });
 };
 
+function getLevelDir(dir,level){
+    var dirs = dir.split(path.sep);
+    if(dirs && dirs.length >= level){
+        return dirs.slice(dirs.length - level)
+    }else{
+        return ""
+    }
+}
 
 function calcMd5(file, slice){
     var md5 = crypto.createHash('md5');

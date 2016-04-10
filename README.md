@@ -46,25 +46,39 @@ the directory of the md5ed files in the imgDst folder is the same as that of ori
 
 ## API
 
-### md5(size,file)
+### md5(size,file,option)
 
 #### size
 Type: `String`
 Default: null
 
-Optionnal: you can pass the size to limit the size of the hash that is appended.
+> you can pass the size to limit the size of the hash that is appended.
 
 #### file
 Type: `String`
 Default: null
 
-Optionnal: the file need to replace the file name of the md5ed files. dir is also supported
+> the file need to replace the file name of the md5ed files. dir is also supported
+
+#### option
+Type: `Object`
+Default: null
+
+##### option.dirLevel
+Type: `Number`
+Default: null
+
+> used to match the file with it's directory path. for example: there is a file `Dev/work/gulp-md5-plus/demo/source/img/sub_img/same.svg`;when setting `dirLevel` to *1*, the plugin will use `sub_img/same.svg` to find this file in the quoted files;this option's main purpose is to replace the files with the same name in different paths. you can see demo for detail.
 
 Example:
 ```javascript
-	gulp.src('static/js/*')
-        .pipe(md5(10,'./output/html'))
-        .pipe(gulp.dest('./output'));
+	gulp.task('img' , ['css'],function() {
+	    gulp.src('./source/img/**/*')
+	        .pipe(md5(10 ,'./output/css/*.css',{
+	        	dirLevel : 1
+	        }))
+	        .pipe(gulp.dest('./output/img/'));
+	});
 ```
 
 The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
