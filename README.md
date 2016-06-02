@@ -85,7 +85,7 @@ The sample above will append the md5 hash(length : 10) to each of the file in th
 
 ##### option.connector
 Type: `String`
-Default: `-`
+Default: `_`
 
 Example:
 ```javascript
