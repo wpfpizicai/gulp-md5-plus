@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var md5 = require("gulp-md5-plus");
 var del = require('del');
+var md5 = require('../index.js');
 
 gulp.task('clean', function(){
 	return del(['./output'])
@@ -20,9 +20,7 @@ gulp.task('css',['html'],function(){
 
 gulp.task('img' , ['css'],function() {
     gulp.src('./source/img/**/*')
-        .pipe(md5(10 ,'./output/css/*.css',{
-        	dirLevel : 1
-        }))
+        .pipe(md5(10 ,'./output/css/*.css'))
         .pipe(gulp.dest('./output/img/'));
 });
 

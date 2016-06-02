@@ -5,9 +5,15 @@ var path = require('path')
 , fs = require('fs')
 , glob = require('glob');
 
+// 默认连接符
+var connector = '_';
+
 module.exports = function (size, ifile, option) {
     size = size | 0;
     option = option || {};
+
+    connector = option.connector || connector;
+
     return through.obj(function (file, enc, cb) {
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-debug', 'Streaming not supported'));
@@ -31,7 +37,7 @@ module.exports = function (size, ifile, option) {
         dir = path.dirname(dir);
 
         var md5_filename = filename.split('.').map(function(item, i, arr){
-            return i == arr.length-2 ? item + '_'+ d : item;
+            return i == arr.length-2 ? item + connector + d : item;
         }).join('.');
         var levelDir = "";
         if(option.dirLevel){

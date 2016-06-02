@@ -15,12 +15,14 @@
     "gulp-md5"
   ],
   "dependencies": {
+    "del": "^2.2.0",
+    "glob": "^4.0.6",
+    "gulp": "^3.9.1",
     "gulp-util": "~2.2.14",
-    "through2": "^0.4.1",
-    "glob" : "^4.0.6"
+    "through2": "^0.4.1"
   },
   "homepage": "https://github.com/wpfpizicai/gulp-md5-plus.git",
   "author": "wpfpizicai",
-  "email" : "tjuwpf@163.com",
+  "email": "tjuwpf@163.com",
   "license": "MIT"
 }

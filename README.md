@@ -83,6 +83,21 @@ Example:
 
 The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
 
+##### option.connector
+Type: `String`
+Default: `_`
+
+Example:
+```javascript
+	gulp.task('img' , ['css'],function() {
+	    gulp.src('./source/img/**/*')
+	        .pipe(md5(10 ,'./output/css/*.css',{
+	        	connector : '.'
+	        }))
+	        .pipe(gulp.dest('./output/img/'));
+	});
+```
+
 ## Demo
 
 I have add a demo to demonstate how to use this plugin; If you have any other questions ,pls add issues.
@@ -90,5 +105,3 @@ I have add a demo to demonstate how to use this plugin; If you have any other qu
 ## License
 
 http://en.wikipedia.org/wiki/MIT_License[MIT License]
-
-
