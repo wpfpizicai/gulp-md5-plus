@@ -8,6 +8,7 @@ var path = require('path')
 module.exports = function (size, ifile, option) {
     size = size | 0;
     option = option || {};
+    var md5_mapping = {};//save file mapping
     return through.obj(function (file, enc, cb) {
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-debug', 'Streaming not supported'));
@@ -37,6 +38,9 @@ module.exports = function (size, ifile, option) {
         if(option.dirLevel){
             levelDir = getLevelDir(dir,option.dirLevel).join(path.sep);
         }
+        
+        md5_mapping[filename] = md5_filename;//add mappinig to json;
+        
         var l_filename = path.join(levelDir,filename);
         var l_md5_filename = path.join(levelDir,md5_filename);
 
@@ -45,7 +49,6 @@ module.exports = function (size, ifile, option) {
                 i_ifile && glob(i_ifile,function(err, i_files){
                     if(err) return console.log(err);
                     i_files.forEach(function(i_ilist){
-
                         var result = fs.readFileSync(i_ilist,'utf8').replace(new RegExp('/' + l_filename + '[^a-zA-Z_0-9].*?' ,"g"), function(sfile_name){
                             return sfile_name.replace(l_filename,l_md5_filename)
                         });
@@ -70,6 +73,9 @@ module.exports = function (size, ifile, option) {
         this.push(file);
         cb();
     }, function (cb) {
+        if(option.mappingFile){//output mapping json to file
+            fs.writeFileSync(option.mappingFile, JSON.stringify(md5_mapping) , 'utf8');
+        }
         cb();
     });
 };
