@@ -96,7 +96,7 @@ Mac & Linux:
 Windows
   the plugin will use `sub_img\same.svg` to find this file in the quoted files;
 
-when you set `sep` to */*, it's same in every system platform.
+when you set `sep` to */*, it's `sub_img/same.svg`, same in every system platform.
 
 ## Demo
 
