@@ -43,10 +43,14 @@ module.exports = function (size, ifile, option) {
         
         var l_filename = path.join(levelDir,filename);
         var l_md5_filename = path.join(levelDir,md5_filename);
-		
+
+        if (option.sep === undefined && path.sep != path.posix.sep) {
+            option.sep = path.posix.sep;
+        }
+
 		if(option.sep){
-			l_filename = replacePathSeprator(l_filename, option.sep);
-			l_md5_filename = replacePathSeprator(l_md5_filename, option.sep);
+			l_filename = replacePathSeparator(l_filename, option.sep);
+			l_md5_filename = replacePathSeparator(l_md5_filename, option.sep);
 		}
 
         if(Object.prototype.toString.call(ifile) == "[object Array]"){
@@ -106,15 +110,9 @@ function calcMd5(file, slice){
  * @param filePath file path
  * @param sep path reparator, window system path separator is special
  */
-function replacePathSeprator(filePath, sep) {
+function replacePathSeparator(filePath, sep) {
     if (filePath && sep) {
-        if (typeof sep === 'function') {
-            sep = sep(filePath);
-        }
-		
-		
-
-        if (sep && typeof sep === 'string') {
+        if (typeof sep === 'string') {
             sep = sep.substr(0, 1);
 			
 			if(sep === path.sep){
