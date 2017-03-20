@@ -12,10 +12,7 @@
   "author": "tjuwpf@163.com",
   "license": "MIT",
   "devDependencies": {
-    "gulp-md5-plus": "^0.2.0"
   },
   "dependencies": {
-    "del": "^2.2.0",
-    "gulp": "^3.9.1"
   }
 }
