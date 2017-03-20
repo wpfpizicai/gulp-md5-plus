@@ -3,13 +3,16 @@ var path = require('path')
 , through = require('through2')
 , crypto = require('crypto')
 , fs = require('fs')
-, glob = require('glob');
+, glob = require('glob')
+, jsonfile = require('jsonfile');
 
 module.exports = function (size, ifile, option) {
     size = size | 0;
     option = option || {};
-    var md5_mapping = {};//save file mapping
+    var md5_mapping = {};
+    var connector = option.connector || "_";
     return through.obj(function (file, enc, cb) {
+
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-debug', 'Streaming not supported'));
             return cb();
@@ -32,15 +35,15 @@ module.exports = function (size, ifile, option) {
         dir = path.dirname(dir);
 
         var md5_filename = filename.split('.').map(function(item, i, arr){
-            return i == arr.length-2 ? item + '_'+ d : item;
+            return i == arr.length-2 ? item + connector + d : item;
         }).join('.');
         var levelDir = "";
         if(option.dirLevel){
             levelDir = getLevelDir(dir,option.dirLevel).join(path.posix.sep);
         }
-        
+
         md5_mapping[filename] = md5_filename;//add mappinig to json;
-        
+
         var l_filename = path.posix.join(levelDir,filename);
         var l_md5_filename = path.posix.join(levelDir,md5_filename);
 
@@ -73,8 +76,15 @@ module.exports = function (size, ifile, option) {
         this.push(file);
         cb();
     }, function (cb) {
-        if(option.mappingFile){//output mapping json to file
-            fs.writeFileSync(option.mappingFile, JSON.stringify(md5_mapping) , 'utf8');
+        if(option.mappingFile){
+            try{
+                md5_mapping = Object.assign(md5_mapping, jsonfile.readFileSync(option.mappingFile))
+            }catch(err){
+                fs.writeFileSync(option.mappingFile,"{}",'utf8');
+            }
+            jsonfile.writeFile(option.mappingFile, md5_mapping , {spaces: 2}, function(err) {
+                return new gutil.PluginError('gulp-debug', 'output mapping file error')
+            });
         }
         cb();
     });

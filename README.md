@@ -75,13 +75,30 @@ Example:
 	gulp.task('img' , ['css'],function() {
 	    gulp.src('./source/img/**/*')
 	        .pipe(md5(10 ,'./output/css/*.css',{
-	        	dirLevel : 1
+	        	dirLevel : 1,
+	        	mappingFile: 'manifest.json',
+        		connector: '.'
 	        }))
 	        .pipe(gulp.dest('./output/img/'));
 	});
 ```
 
 The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
+
+##### option.connector
+Type: `String`
+Default: `_`
+
+> used to set the output file‘s connector; if use `.` the outfile will look like `imgfile.5546983ac2.png` ,while default is `imgfile_5546983ac2.png` 
+
+
+##### option.mappingFile
+Type: `String`
+Default: null 
+
+> set the file to write the mapping result ,for example `manifest.json`  
+
+after set this option ;you should remove this file before `gulp`; you can follow the demo;
 
 ## Demo
 
