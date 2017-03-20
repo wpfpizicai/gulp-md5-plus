@@ -36,13 +36,13 @@ module.exports = function (size, ifile, option) {
         }).join('.');
         var levelDir = "";
         if(option.dirLevel){
-            levelDir = getLevelDir(dir,option.dirLevel).join(path.sep);
+            levelDir = getLevelDir(dir,option.dirLevel).join(path.posix.sep);
         }
         
         md5_mapping[filename] = md5_filename;//add mappinig to json;
         
-        var l_filename = path.join(levelDir,filename);
-        var l_md5_filename = path.join(levelDir,md5_filename);
+        var l_filename = path.posix.join(levelDir,filename);
+        var l_md5_filename = path.posix.join(levelDir,md5_filename);
 
         if(Object.prototype.toString.call(ifile) == "[object Array]"){
             ifile.forEach(function(i_ifile){
