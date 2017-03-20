@@ -44,6 +44,15 @@ module.exports = function (size, ifile, option) {
         var l_filename = path.posix.join(levelDir,filename);
         var l_md5_filename = path.posix.join(levelDir,md5_filename);
 
+        if (option.sep === undefined && path.sep != path.posix.sep) {
+            option.sep = path.posix.sep;
+        }
+
+		if(option.sep){
+			l_filename = replacePathSeparator(l_filename, option.sep);
+			l_md5_filename = replacePathSeparator(l_md5_filename, option.sep);
+		}
+
         if(Object.prototype.toString.call(ifile) == "[object Array]"){
             ifile.forEach(function(i_ifile){
                 i_ifile && glob(i_ifile,function(err, i_files){
@@ -94,4 +103,26 @@ function calcMd5(file, slice){
     md5.update(file.contents, 'utf8');
 
     return slice >0 ? md5.digest('hex').slice(0, slice) : md5.digest('hex');
+}
+
+/**
+ * repalce the file path separator, resolve dirLevel error bug
+ * @param filePath file path
+ * @param sep path reparator, window system path separator is special
+ */
+function replacePathSeparator(filePath, sep) {
+    if (filePath && sep) {
+        if (typeof sep === 'string') {
+            sep = sep.substr(0, 1);
+			
+			if(sep === path.sep){
+				return filePath;
+			}
+
+            var reg = new RegExp('\\' + path.sep, 'g');
+            return filePath.replace(reg, sep);
+        }
+    }
+
+    return filePath;
 }

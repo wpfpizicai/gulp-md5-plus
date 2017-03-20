@@ -83,6 +83,21 @@ Example:
 
 The sample above will append the md5 hash(length : 10) to each of the file in the static/js folder then repalce the link file name in the output/html/ using md5ed file name; at last store all of that into the *output* folder.
 
+##### option.sep
+Type: `String`
+Default: `require('path').posix.sep`
+
+> use to replace file path's separator when option.dirLevel is not null.
+
+for example:
+  there is a file `Dev/work/gulp-md5-plus/demo/source/img/sub_img/same.svg`; when setting `dirLevel` to `1`,
+Mac & Linux:
+  the plugin will use `sub_img/same.svg` to find this file in the quoted files;
+Windows
+  the plugin will use `sub_img\same.svg` to find this file in the quoted files;
+
+when you set `sep` to `/`, it's `sub_img/same.svg`, same in every system platform.
+
 ## Demo
 
 I have add a demo to demonstate how to use this plugin; If you have any other questions ,pls add issues.
