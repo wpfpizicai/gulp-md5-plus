@@ -4,7 +4,8 @@ var path = require('path')
 , crypto = require('crypto')
 , fs = require('fs')
 , glob = require('glob')
-, jsonfile = require('jsonfile');
+, jsonfile = require('jsonfile')
+, pathsep = path.posix.sep;
 
 module.exports = function (size, ifile, option) {
     size = size | 0;
@@ -25,7 +26,7 @@ module.exports = function (size, ifile, option) {
         var d = calcMd5(file, size)
         , filename = path.basename(file.path)
         , relativepath = path.relative(file.base ,file.path)
-        , sub_namepath = relativepath.replace(new RegExp(filename) , "").split(path.sep).join('/')
+        , sub_namepath = relativepath.replace(new RegExp(filename) , "").split(pathsep).join('/')
         , dir;
         if(file.path[0] == '.'){
             dir = path.join(file.base, file.path);
@@ -39,7 +40,7 @@ module.exports = function (size, ifile, option) {
         }).join('.');
         var levelDir = "";
         if(option.dirLevel){
-            levelDir = getLevelDir(dir,option.dirLevel).join(path.posix.sep);
+            levelDir = getLevelDir(dir,option.dirLevel).join(pathsep);
         }
 
         md5_mapping[filename] = md5_filename;//add mappinig to json;
@@ -91,7 +92,7 @@ module.exports = function (size, ifile, option) {
 };
 
 function getLevelDir(dir,level){
-    var dirs = dir.split(path.sep);
+    var dirs = dir.split(pathsep);
     if(dirs && dirs.length >= level){
         return dirs.slice(dirs.length - level)
     }else{
