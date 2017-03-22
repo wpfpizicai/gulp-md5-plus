@@ -50,22 +50,26 @@ the directory of the md5ed files in the imgDst folder is the same as that of ori
 
 #### size
 Type: `String`
+
 Default: null
 
 > you can pass the size to limit the size of the hash that is appended.
 
 #### file
 Type: `String`
+
 Default: null
 
 > the file need to replace the file name of the md5ed files. dir is also supported
 
 #### option
 Type: `Object`
+
 Default: null
 
 ##### option.dirLevel
 Type: `Number`
+
 Default: null
 
 > used to match the file with it's directory path. for example: there is a file `Dev/work/gulp-md5-plus/demo/source/img/sub_img/same.svg`;when setting `dirLevel` to *1*, the plugin will use `sub_img/same.svg` to find this file in the quoted files;this option's main purpose is to replace the files with the same name in different paths. you can see demo for detail.
@@ -87,6 +91,7 @@ The sample above will append the md5 hash(length : 10) to each of the file in th
 
 ##### option.connector
 Type: `String`
+
 Default: `_`
 
 > used to set the output file‘s connector; if use `.` the outfile will look like `imgfile.5546983ac2.png` ,while default is `imgfile_5546983ac2.png` 
@@ -94,6 +99,7 @@ Default: `_`
 
 ##### option.mappingFile
 Type: `String`
+
 Default: null 
 
 > set the file to write the mapping result ,for example `manifest.json`  
