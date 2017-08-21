@@ -96,7 +96,7 @@ function getLevelDir(dir,level){
     if(dirs && dirs.length >= level){
         return dirs.slice(dirs.length - level)
     }else{
-        return ""
+        return []
     }
 }
 
