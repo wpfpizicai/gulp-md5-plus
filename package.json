@@ -17,13 +17,13 @@
   "dependencies": {
     "gulp-util": "~2.2.14",
     "through2": "^0.4.1",
-    "glob": "^4.0.6"
+    "glob": "^4.0.6",
+    "jsonfile": "^2.4.0"
   },
   "homepage": "https://github.com/wpfpizicai/gulp-md5-plus.git",
   "author": "wpfpizicai",
   "email": "tjuwpf@163.com",
   "license": "MIT",
   "devDependencies": {
-    "jsonfile": "^2.4.0"
   }
 }
