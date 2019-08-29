@@ -1,5 +1,5 @@
 var path = require('path')
-, PluginError = require('plugin-error'),
+, PluginError = require('plugin-error')
 , through = require('through2')
 , crypto = require('crypto')
 , fs = require('fs')
